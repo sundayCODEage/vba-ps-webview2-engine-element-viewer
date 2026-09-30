@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- 
+        ==================================================================
+        【第2章-2】06_popup_parent.html (親画面)
+        [RPAテスト目的] ポップアップ呼出と元画面へのフォーカス復帰待機
+        - ページタイトル取得: Get-WebTitle
+        - 期待値: "[IP100800] 伝票入力（親画面）"
+        ==================================================================
+    -->
+    <meta charset="UTF-8">
+    <title>[IP100800] 伝票入力（親画面）</title>
+    <link rel="stylesheet" href="style_common.css">
+</head>
+<body>
+    <div class="sys-header">
+        <h2>[IP100800] 伝票入力（親画面）</h2>
+        <span>ログイン者: 財政課 担当者A</span>
+    </div>
+
+    <!-- ファンクションボタンバー -->
+    <ul class="function-bar" style="display:flex; gap:10px; background:#e2e8f0; padding:10px; list-style:none;">
+        <!-- 
+            ==================================================================
+            [RPAテスト目的①] 子画面ポップアップの呼び出し
+            - VBA実行コマンド:
+              rpaEngine.RunAction "Invoke-WebXPathClick", CreateParams("XPath", "//li[@id='FUNC2']")
+            - 動作: JavaScriptの window.open により別ウィンドウ/別タブで 06_popup_child.html を開きます。
+            ==================================================================
+        -->
+        <li id="FUNC2" onclick="openChildWindow()" style="background:#fff; padding:8px 15px; border:1px solid #ccc; cursor:pointer; font-weight:bold;">F2: 部門検索(子画面表示)</li>
+    </ul>
+
+    <div class="card" style="margin-top:15px;">
+        <h3>■ 伝票ヘッダー情報</h3>
+        <form id="parentForm">
+            <div class="form-group" style="margin-bottom:10px;">
+                <label for="deptCode">部門コード：</label>
+                <!-- 
+                    [RPAテスト目的②] 子画面からセットされる結果入力欄 (ReadOnly)
+                    - 子画面の選択処理によって JavaScript 経由で値が挿入されます。
+                -->
+                <input type="text" id="deptCode" name="deptCode" readonly style="background:#f1f5f9; width:100px;">
+            </div>
+
+            <div class="form-group" style="margin-bottom:10px;">
+                <label for="deptName">部門名称：</label>
+                <!-- 
+                    [RPAテスト目的③] 子画面から戻った後の画面反映テキスト検証
+                    - VBA実行コマンド (子画面操作後に親画面へ戻った後):
+                      Dim val As String
+                      val = rpaEngine.RunAction("Get-WebXPathText", CreateParams("XPath", "//input[@id='deptName']"))
+                -->
+                <input type="text" id="deptName" name="deptName" readonly style="background:#f1f5f9; width:250px;">
+            </div>
+        </form>
+    </div>
+
+<script>
+        // 子画面を開く
+        function openChildWindow() {
+            // 前回の共有メモリをクリア
+            localStorage.removeItem('selected_deptCode');
+            localStorage.removeItem('selected_deptName');
+            
+            window.open('06_popup_child.html', 'SubSearchWindow', 'width=700,height=500,scrollbars=yes');
+        }
+
+        // 親画面の描画更新関数
+        function setDepartmentData(code, name) {
+            document.getElementById('deptCode').value = code;
+            document.getElementById('deptName').value = name;
+        }
+
+        // 【ローカル file:// 環境対策】
+        // window.opener が隔離されるローカル環境でも、localStorage を監視して自動反映します
+        setInterval(function() {
+            const code = localStorage.getItem('selected_deptCode');
+            const name = localStorage.getItem('selected_deptName');
+            if (code && name) {
+                setDepartmentData(code, name);
+                localStorage.removeItem('selected_deptCode');
+                localStorage.removeItem('selected_deptName');
+            }
+        }, 200);
+    </script>
+</body>
+</html>

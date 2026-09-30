@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>12. 統合テスト (スクロール/Shadow DOM/モダンUI/動的要素)</title>
+    <style>
+        body { font-family: "Meiryo", sans-serif; margin: 0; line-height: 1.6; color: #333; background-color: #f5f5f5; }
+        /* 1. 固定ヘッダー（position: fixed） */
+        .sticky-header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: #0078d4; color: white; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: bold; }
+        .container { max-width: 800px; margin: 80px auto 20px; padding: 25px; border: 1px solid #ddd; border-radius: 8px; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .explanation { background-color: #eef7ff; padding: 15px; margin-bottom: 25px; border-left: 5px solid #0078d4; border-radius: 3px; }
+        /* スクロール強制スペーサー */
+        .spacer { height: 400px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef); border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; color: #6c757d; margin-bottom: 25px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <!-- 画面上部に常に覆いかぶさる固定ヘッダー -->
+    <div class="sticky-header" id="fixed-header">
+        【固定ヘッダー】 常に最前面に表示されます（スクロール時の座標ズレ・裏潜り検証用）
+    </div>
+
+    <div class="container">
+        <div class="explanation">
+            <p><strong>【テスト概要】</strong><br>
+            スクロール、Shadow DOM、透過隠蔽UI、非活性状態、動的出現など、RPAツールが苦手とする要素を網羅した統合テスト画面です。</p>
+        </div>
+
+        <div class="spacer">
+            <p>↓ テスト要素はさらに下です。スクロールしてください ↓<br>（高さ: 400px）
+		<br>
+		<br>
+		(※ C列・D列の座標は、事前に手動ピッカーを起動して取得した Client/X, Client/Y を入力してください。)
+            </p>
+        </div>
+
+	<!-- 【中段】 仕様メモ（ピッカーのフェイルセーフ解説） -->
+        <div class="explanation" style="border-left-color: #f59e0b; background-color: #fffbeb;">
+            <h3 style="color: #d97706; margin-top: 0;">💡 【重要】 ピッカーの自律的なフェイルセーフ仕様について</h3>
+            <p>このテスト画面（T22～T27）で取得されるセレクタには、RPAエンジンの自律的な判断（エラー回避機構）が働いています。これはバグではなく、モダンWeb特有の「壁」を乗り越えるための仕様とします。</p>
+            
+            <ul style="padding-left: 20px; line-height: 1.7;">
+                <li style="margin-bottom: 15px;">
+                    <strong>① Shadow DOM内要素の XPATH 自動フォールバック (T22, 23, 25, 26, 27)</strong><br>
+                    IDを持つ要素であっても、<code>#shadow-select</code> ではなく <code>XPATH://select[@id="shadow-select"]</code> の形式で出力されることがあります。<br>
+                    <strong>【理由】</strong> ピッカーは取得したCSSセレクタが画面内で「確実に一意であるか」を検証します。しかし、Shadow DOMの壁の内側は外部からの検索（querySelectorAll）を弾くため検証不能となります。エンジンはこれを「CSS指定では確実な動作が保証できない」と自動判定し、より堅牢な <strong>XPATH形式へ自律的に切り替えて出力</strong> します。
+                </li>
+                <li>
+                    <strong>② 透過・隠蔽UIにおける「見た目」の捕捉 (T24)</strong><br>
+                    モダンUIのラジオボタンを取得した際、非表示の <code>&lt;input&gt;</code> ではなく、装飾用の <code>span.modern-radio-label</code> が取得されます。<br>
+                    <strong>【理由】</strong> 現代のWebでは、本来のinput要素を透明化し、背後のspanタグ等でデザインを構築する手法が一般的です。エンジンは透明で見えない要素を無理に探すのではなく、<strong>「人が実際に見て、クリック可能な要素（span）」を正確に捕捉</strong>します。ラベル側をクリックすることで間接的にinputも切り替わるため、エラーを未然に防ぐ合理的なアプローチとします。
+                </li>
+            </ul>
+        </div>
+
+        <!-- Shadow DOM ホスト要素 -->
+        <div id="host" style="margin-bottom: 25px;"></div>
+
+        <div style="height: 500px; border: 1px dashed #eee; text-align: center; color: #bbb; padding-top: 20px;">
+            End of Page
+        </div>
+    </div>
+
+    <script>
+        const host = document.getElementById('host');
+        const shadow = host.attachShadow({ mode: 'open' });
+
+        shadow.innerHTML = `
+            <style>
+                .shadow-box { padding: 25px; border: 2px dashed #d13438; background-color: #fffaf0; border-radius: 5px; }
+                .form-group { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dotted #ccc; }
+                label { font-weight: bold; display: block; margin-bottom: 5px; }
+                
+                /* 汎用入力系 */
+                select, textarea, input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 3px; font-family: inherit; box-sizing: border-box; }
+                
+                /* モダンUI風 透過・隠蔽ラジオボタン (T04/T05再現) */
+                .modern-radio-container { position: relative; display: inline-block; margin-right: 15px; cursor: pointer; }
+                .modern-radio-container input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+                .modern-radio-label { display: inline-block; padding: 8px 15px; background: #e2e8f0; border-radius: 20px; border: 2px solid transparent; transition: 0.2s; }
+                .modern-radio-container input[type="radio"]:checked + .modern-radio-label { background: #d13438; color: white; }
+
+                /* ボタン系 */
+                button { padding: 10px 20px; cursor: pointer; background-color: #0078d4; color: white; border: none; border-radius: 3px; font-weight: bold; }
+                button:hover { background-color: #005a9e; }
+                
+                /* 動的出現要素 */
+                #dynamic-result { margin-top: 10px; padding: 10px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; display: none; }
+            </style>
+            
+            <div class="shadow-box">
+                <h3 style="margin-top:0; color:#d13438;">▼ ターゲット領域 (Shadow DOM内)</h3>
+                
+                <!-- 1. ドロップダウン (Select) -->
+                <div class="form-group">
+                    <label for="shadow-select">ドロップダウン (Select)</label>
+                    <select id="shadow-select">
+                        <option value="">選択してください</option>
+                        <option value="opt1">オプション 1</option>
+                        <option value="opt2">オプション 2</option>
+                    </select>
+                </div>
+
+                <!-- 2. 複数行テキスト (Textarea) -->
+                <div class="form-group">
+                    <label for="shadow-textarea">複数行テキスト (Textarea)</label>
+                    <textarea id="shadow-textarea" rows="3" placeholder="複数行のテキストを入力..."></textarea>
+                </div>
+
+                <!-- 3. モダンUI風 透過・隠蔽ラジオボタン -->
+                <div class="form-group">
+                    <label>モダンUI風 透過ラジオボタン (Bootstrap風)</label>
+                    <label class="modern-radio-container">
+                        <input type="radio" name="modern-radio" value="A" id="modern-radio-a">
+                        <span class="modern-radio-label">選択肢 A</span>
+                    </label>
+                    <label class="modern-radio-container">
+                        <input type="radio" name="modern-radio" value="B" id="modern-radio-b">
+                        <span class="modern-radio-label">選択肢 B</span>
+                    </label>
+                </div>
+
+                <!-- 4. 無効化 (disabled) と 読取専用 (readonly) -->
+                <div class="form-group">
+                    <label>無効化 (disabled) と 読取専用 (readonly)</label>
+                    <input type="text" id="disabled-input" value="操作不可データ" disabled style="margin-bottom: 10px; background: #eee;">
+                    <input type="text" id="readonly-input" value="読取専用データ" readonly style="background: #fdfd96;">
+                </div>
+
+                <!-- 5. 動的に出現する要素 (遅延表示) -->
+                <div class="form-group" style="border-bottom: none;">
+                    <label>動的出現要素 (クリック後2秒で表示)</label>
+                    <button id="trigger-btn">動的要素を表示</button>
+                    <div id="dynamic-result">🎉 動的要素が出現しました！（id="dynamic-result"）</div>
+                </div>
+            </div>
+        `;
+
+        // 動的要素のイベント設定
+        shadow.getElementById('trigger-btn').addEventListener('click', function() {
+            const btn = this;
+            btn.innerText = '処理中...';
+            btn.disabled = true;
+            setTimeout(() => {
+                shadow.getElementById('dynamic-result').style.display = 'block';
+                btn.innerText = '表示完了';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
