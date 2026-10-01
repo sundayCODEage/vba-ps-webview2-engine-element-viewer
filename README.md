@@ -1,4 +1,7 @@
 
+_2026/10/01　モジュール全体を準備中_
+
+---
 
 <h4 align="center">汎用RPA操作エンジン (VBA × PowerShell × WebView2 Hybrid-Engine)</h4>
 
