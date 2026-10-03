@@ -1,6 +1,6 @@
 
-_2026/10/01　モジュール全体を準備中_<br>
-Vbaﾓｼﾞｭｰﾙ: Mod_TestDevTools(画面情報エクスポート＆要素ピッカー)は修正中です。動作イメージは /sample_BOX/Screenshot 内にイメージ画像が有ります。（要素取得は出来るが、フレームの座標表示が可笑しい）
+_2026/10/04_<br>
+Psモジュール: Lib-DevTools_v301.ps1、vbaﾓｼﾞｭｰﾙ: Mod_TestDevTools (画面情報エクスポート＆要素ピッカー)、 sample_rpa_test T を修正しました。
 
 ---
 
