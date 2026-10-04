@@ -1,6 +1,6 @@
 
 _2026/10/04_<br>
-Psモジュール: Lib-DevTools_v301.ps1、vbaﾓｼﾞｭｰﾙ: Mod_TestDevTools (画面情報エクスポート＆要素ピッカー)、 sample_rpa_test T を修正しました。
+_Psモジュール: Lib-DevTools_v301.ps1、vbaﾓｼﾞｭｰﾙ: Mod_TestDevTools (画面情報エクスポート＆要素ピッカー)、 sample_rpa_test T を修正しました。_
 
 ---
 
