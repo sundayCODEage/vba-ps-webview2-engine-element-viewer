@@ -108,14 +108,15 @@ EdgeネイティブのPDFビューア画面などで不安定要因となるOS�
 * VBA-JSON v2.3.1 (JsonConverter) _※要 Microsoft Scripting Runtime 参照設定_
 
 📚 **ドキュメント** (Documentation)<br>
-モジュール別の詳細な関数リファレンスや、プロセス間通信のJSONプロトコル仕様については、マニュアル（仕様書）をご参照ください。
-
+モジュール別の詳細な関数リファレンスや、プロセス間通信のJSONプロトコル仕様については、マニュアル（仕様書）をご参照ください。<br>
+&emsp; 📁 **docs**/    
 &emsp;&emsp; _**m01_セットアップ(Getting Started).md**_<br>
 &emsp;&emsp; _**m02_rpa-Engine(開発・運用)仕様書.md**_<br>
 &emsp;&emsp;&emsp; _m03_Engine(関数TEST)ローカルhtml.md_<br>
 &emsp;&emsp;&emsp; _m04_Engine(関数TEST)公開サイト.md_<br>
 &emsp;&emsp;&emsp; _m11_コードテスト(ローカルhtml).md_<br>
 &emsp;&emsp;&emsp; _m12_コードテスト(公開サイト).md_<br>
+&emsp;&emsp;&emsp; _m13_コードテスト(要素ピッカー).md_<br>
 
 ---
 
