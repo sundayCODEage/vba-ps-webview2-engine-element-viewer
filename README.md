@@ -2,6 +2,8 @@
 _2026/10/04_<br>
 _Psモジュール: Lib-DevTools_v301.ps1、vbaﾓｼﾞｭｰﾙ: Mod_TestDevTools (画面情報エクスポート＆要素ピッカー)、 sample_rpa_test T を修正しました。_
 
+<sub>_本リポジトリは、VBAとPowerShell、WebView2を活用した汎用Web RPA操作エンジンです（旧 **RPA-Hybrid-Engine** から移行）_</sub>
+
 ---
 
 <h4 align="center">汎用RPA操作エンジン (VBA × PowerShell × WebView2 Hybrid-Engine)</h4>
