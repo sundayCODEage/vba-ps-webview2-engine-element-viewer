@@ -36,16 +36,16 @@
 	<!-- 【中段】 仕様メモ（ピッカーのフェイルセーフ解説） -->
         <div class="explanation" style="border-left-color: #f59e0b; background-color: #fffbeb;">
             <h3 style="color: #d97706; margin-top: 0;">💡 【重要】 ピッカーの自律的なフェイルセーフ仕様について</h3>
-            <p>このテスト画面（T22～T27）で取得されるセレクタには、RPAエンジンの自律的な判断（エラー回避機構）が働いています。これはバグではなく、モダンWeb特有の「壁」を乗り越えるための仕様とします。</p>
+            <p>このテスト画面で取得されるセレクタには、RPAエンジンの自律的な判断（エラー回避機構）が働いています。これはバグではなく、モダンWeb特有の「壁」を乗り越えるための仕様とします。</p>
             
             <ul style="padding-left: 20px; line-height: 1.7;">
                 <li style="margin-bottom: 15px;">
-                    <strong>① Shadow DOM内要素の XPATH 自動フォールバック (T22, 23, 25, 26, 27)</strong><br>
+                    <strong>① Shadow DOM内要素の XPATH 自動フォールバック</strong><br>
                     IDを持つ要素であっても、<code>#shadow-select</code> ではなく <code>XPATH://select[@id="shadow-select"]</code> の形式で出力されることがあります。<br>
-                    <strong>【理由】</strong> ピッカーは取得したCSSセレクタが画面内で「確実に一意であるか」を検証します。しかし、Shadow DOMの壁の内側は外部からの検索（querySelectorAll）を弾くため検証不能となります。エンジンはこれを「CSS指定では確実な動作が保証できない」と自動判定し、より堅牢な <strong>XPATH形式へ自律的に切り替えて出力</strong> します。
+                    <strong>【理由】</strong> ピッカーは取得したCSSセレクタが画面内で「確実に一意であるか」を検証します。しかし、Shadow DOMの壁の内側は外部からの検索（querySelectorAll）を弾くため検証不能となります。エンジンはこれを「CSS指定では確実な動作が保証できない」と自動判定し、<strong>XPATH形式へ自律的に切り替えて出力</strong> します。
                 </li>
                 <li>
-                    <strong>② 透過・隠蔽UIにおける「見た目」の捕捉 (T24)</strong><br>
+                    <strong>② 透過・隠蔽UIにおける「見た目」の捕捉</strong><br>
                     モダンUIのラジオボタンを取得した際、非表示の <code>&lt;input&gt;</code> ではなく、装飾用の <code>span.modern-radio-label</code> が取得されます。<br>
                     <strong>【理由】</strong> 現代のWebでは、本来のinput要素を透明化し、背後のspanタグ等でデザインを構築する手法が一般的です。エンジンは透明で見えない要素を無理に探すのではなく、<strong>「人が実際に見て、クリック可能な要素（span）」を正確に捕捉</strong>します。ラベル側をクリックすることで間接的にinputも切り替わるため、エラーを未然に防ぐ合理的なアプローチとします。
                 </li>
