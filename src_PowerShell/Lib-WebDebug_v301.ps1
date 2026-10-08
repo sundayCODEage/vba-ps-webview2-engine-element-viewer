@@ -972,7 +972,7 @@ function Test-SelectorStability {
         }
         Write-DebugLog -Message ("[RUN $i/$Repeat]: [OK] tag=$($info.tag), id=$($info.id), name=$($info.name) " +
                          ",[left=$($info.rect.left), top=$($info.rect.top), width=$($info.rect.width), height=$($info.rect.height)]") -Level Success
-        $successCount++                         
+        $successCount++
     }
 
     if ($successCount -eq 0) {
@@ -980,5 +980,5 @@ function Test-SelectorStability {
         return "セレクタの安定性テストに失敗しました"
     }
     
-    return "安定性テスト [OK]"    
+    return "安定性テスト [OK]"
 }
