@@ -948,6 +948,7 @@ function Test-SelectorStability {
     })();
 "@
 
+    $successCount = 0
     # 指定された回数(Repeat)だけ、一定間隔で安定して要素が取得できるかテストを繰り返す。
     for ($i = 1; $i -le $Repeat; $i++) {
         # JSを実行し、JSONをPowerShellのオブジェクトへデコードする。
@@ -971,5 +972,13 @@ function Test-SelectorStability {
         }
         Write-DebugLog -Message ("[RUN $i/$Repeat]: [OK] tag=$($info.tag), id=$($info.id), name=$($info.name) " +
                          ",[left=$($info.rect.left), top=$($info.rect.top), width=$($info.rect.width), height=$($info.rect.height)]") -Level Success
+        $successCount++                         
     }
+
+    if ($successCount -eq 0) {
+#✘         throw (New-EngineException -Func $func -Type "引数エラー" -Message "セレクタの安定性テストに失敗しました" -Details $Selector)
+        return "セレクタの安定性テストに失敗しました"
+    }
+    
+    return "安定性テスト [OK]"    
 }
