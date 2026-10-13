@@ -10,7 +10,7 @@
 #### 今が上
 
 
-* 改行コードの混入でした。Commit changes で修正できるようでした。<br>
+* 改行コードの混入でした。Commit changes で修正できるようでした。（また、修正時に） sample_BOX に / Ps_mixed line endings(改行コードの混在検査) を 取りあえず追加。同一階層のモジュールを検査できます。<br>
 一部コードで、<br>
 We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style(CRLF)　が出る<br>
 ~~一度、リポジトリの削除が必要？（自分のPC上は問題無かったし、意味分らんので、削除検討中）<br>
