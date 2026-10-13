@@ -1,12 +1,4 @@
 
-一部コードで、<br>
-We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style(CRLF)　が出る<br>
-一度、リポジトリの削除が必要？（自分のPC上は問題無かったし、意味分らんので、削除検討中）<br>
-10/1から<br>
-Unique visitors in last 14 days 6 Unique visitors<br>
-Unique cloners in last 14 days 271 Unique cloners なので、6名の方がコピーしてくれた？ ごめんなさい。
-
-
 _2026/10/04_<br>
 _Psモジュール: Lib-DevTools_v301.ps1、vbaﾓｼﾞｭｰﾙ: Mod_TestDevTools (画面情報エクスポート＆要素ピッカー)、 sample_rpa_test T を修正しました。_
 
