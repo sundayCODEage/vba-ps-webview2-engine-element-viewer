@@ -9,6 +9,15 @@
 
 #### 今が上
 
+
+改行コードの混入でした。Commit changes で修正できるようでした。<br>
+~~一部コードで、<br>
+We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style(CRLF)　が出る<br>
+一度、リポジトリの削除が必要？（自分のPC上は問題無かったし、意味分らんので、削除検討中）<br>
+10/1から<br>
+Unique visitors in last 14 days 6 Unique visitors<br>
+Unique cloners in last 14 days 271 Unique cloners なので、6名の方がコピーしてくれた？ ごめんなさい。~~
+
 * **m13_コードテスト(要素ピッカー).md** に、今までの GEMINI アドバイス事項を 未整理部分も有りますが取り急ぎ補足しておきます。今まで いいタイミングで利用できたので良しとしよう。
 
 * 現在のコードは、pro で開発していたが、2026年10月9日以降は、出来ない模様（「Flash-Lite」限定）、残念。
