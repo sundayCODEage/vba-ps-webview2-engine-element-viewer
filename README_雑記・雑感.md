@@ -9,6 +9,32 @@
 
 #### 今が上
 
+* 公開サイトでのテストが不安定、取りあえず　タイムアウト延長で一時シノギ
+<details>
+  <summary>&emsp;✅ <i>( --- VBA: 公開サイトでのテストが不安定 --- )</i></summary>
+
+  ```vba
+
+● モジュール初期値を変更する。 （クラスモジュールを操作、初期値は30秒。Property Let,Get）
+    ' クラスモジュール： SendAndReceive-タイムアウトを確認する。
+    Debug.Print " ◆ SendAndReceive-タイムアウト: " & rpaEngine.Loop_TimeoutSec
+    rpaEngine.Loop_TimeoutSec = 60
+
+    ' --- (公開サイト)テスト実行 ---
+    Select Case ans
+
+● 公開サイト（the-internet等）のタイムアウトを修正する。
+    targetUrl = "https://the-internet.herokuapp.com/login"
+    ' ==========================================================================
+    ' --- TEST1: Wait-WebPageLoad
+    rpaEngine.RunAction "Invoke-WebNavigation", CreateParams("Url", targetUrl)
+    
+    QueryPerformanceCounter startTime
+    ' 完全なロード完了を待機
+    rpaEngine.RunAction "Wait-WebPageLoad", CreateParams("TimeoutSec", 45)
+```
+</details>
+
 
 * 改行コードの混入でした。Commit changes で修正できるようでした。（また、修正時に） sample_BOX に / Ps_mixed line endings(改行コードの混在検査) を 取りあえず追加。同一階層のモジュールを検査できます。<br>
 一部コードで、<br>
