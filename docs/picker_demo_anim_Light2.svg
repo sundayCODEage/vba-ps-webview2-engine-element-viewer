@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" width="820" height="340">
+  <defs>
+    <!-- 全体背景グラデーション -->
+    <linearGradient id="bgGradA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <!-- ウィンドウのドロップシャドウ -->
+    <filter id="dropShadow" x="-4%" y="-4%" width="108%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <!-- 全体背景（外枠マット） -->
+  <rect width="820" height="340" rx="12" fill="url(#bgGradA)" stroke="#475569" stroke-width="1" />
+
+  <!-- ================= 左側：WebView2 ブラウザ画面 (ライトテーマ) ================= -->
+  <rect x="22" y="18" width="340" height="304" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" filter="url(#dropShadow)" />
+  <!-- ブラウザ タイトルバー -->
+  <path d="M 22 26 A 8 8 0 0 1 30 18 L 354 18 A 8 8 0 0 1 362 26 L 362 48 L 22 48 Z" fill="#1e293b" />
+  <circle cx="40" cy="33" r="5" fill="#ef4444" />
+  <circle cx="56" cy="33" r="5" fill="#f59e0b" />
+  <circle cx="72" cy="33" r="5" fill="#22c55e" />
+  <text x="92" y="37" fill="#f1f5f9" font-family="sans-serif" font-size="12" font-weight="bold">RPA Browser (WebView2 / DPR: 1.25)</text>
+
+  <!-- 通常DOM要素：固定ヘッダー (鮮やかなブルー) -->
+  <rect x="42" y="64" width="300" height="34" rx="5" fill="#0078d4" stroke="#0369a1" stroke-width="1.5" />
+  <text x="56" y="85" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="bold">固定ヘッダー (#fixed-header)</text>
+
+  <!-- Shadow DOM 領域 (暖色クリーム背景 ＋ インディゴ破線) -->
+  <rect x="42" y="114" width="300" height="190" rx="6" fill="#fffbeb" stroke="#4f46e5" stroke-width="1.8" stroke-dasharray="5,4" />
+  <rect x="52" y="122" width="218" height="18" rx="3" fill="#e0e7ff" />
+  <text x="58" y="135" fill="#3730a3" font-family="Consolas, 'Meiryo UI', monospace" font-size="11" font-weight="bold">#shadow-root (open) - 貫通探索エリア</text>
+  
+  <!-- ドロップダウン -->
+  <text x="58" y="164" fill="#334155" font-family="sans-serif" font-size="11.5" font-weight="bold">ドロップダウン (Select)</text>
+  <rect x="58" y="174" width="268" height="36" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.5" />
+  <text x="70" y="196" fill="#0f172a" font-family="Consolas, 'Meiryo UI', monospace" font-size="11.5" font-weight="bold">[select id="shadow-select"]</text>
+  <text x="304" y="196" fill="#64748b" font-family="sans-serif" font-size="11">▼</text>
+
+  <!-- モダンUI ラジオボタン (透過・隠蔽UIの装飾span) -->
+  <text x="58" y="232" fill="#334155" font-family="sans-serif" font-size="11.5" font-weight="bold">透過・隠蔽ラジオボタン</text>
+  <rect x="58" y="242" width="165" height="36" rx="18" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+  <circle cx="76" cy="260" r="6" fill="#ffffff" stroke="#64748b" stroke-width="1.5" />
+  <text x="90" y="264" fill="#1e293b" font-family="sans-serif" font-size="12" font-weight="bold">選択肢 A (span.label)</text>
+
+  <!-- 動く赤枠ハイライト (ライト背景上で鮮明に際立つ赤枠) -->
+  <rect x="42" y="64" width="300" height="34" rx="5" fill="#ef4444" fill-opacity="0.16" stroke="#dc2626" stroke-width="2.8">
+    <animate attributeName="x" values="42;42;58;58;58;42" keyTimes="0;0.15;0.3;0.75;0.85;1" dur="6s" repeatCount="indefinite" />
+    <animate attributeName="y" values="64;64;174;174;242;64" keyTimes="0;0.15;0.3;0.75;0.85;1" dur="6s" repeatCount="indefinite" />
+    <animate attributeName="width" values="300;300;268;268;165;300" keyTimes="0;0.15;0.3;0.75;0.85;1" dur="6s" repeatCount="indefinite" />
+    <animate attributeName="height" values="34;34;36;36;36;34" keyTimes="0;0.15;0.3;0.75;0.85;1" dur="6s" repeatCount="indefinite" />
+  </rect>
+
+  <!-- ピッカー発火波紋 (パルス) -->
+  <circle cx="190" cy="192" r="2" fill="none" stroke="#dc2626" stroke-width="3" opacity="0">
+    <animate attributeName="r" values="2;2;38;38" keyTimes="0;0.32;0.5;1" dur="6s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.32;0.5;1" dur="6s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- マウスカーソル -->
+  <g transform="translate(90,82)">
+    <polygon points="0,0 0,19 5,15 9,23 12,21 8,13 15,13" fill="#0f172a" stroke="#ffffff" stroke-width="1.8" />
+    <animateTransform attributeName="transform" type="translate" values="90,82; 90,82; 190,192; 190,192; 120,260; 90,82" keyTimes="0;0.15;0.3;0.75;0.85;1" dur="6s" repeatCount="indefinite" />
+  </g>
+
+  <!-- ================= 中央：パイプライン通信アニメーション ================= -->
+  <rect x="368" y="142" width="68" height="20" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" />
+  <text x="374" y="156" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">JSON / CDP</text>
+  <line x1="366" y1="174" x2="438" y2="174" stroke="#94a3b8" stroke-width="3" stroke-dasharray="4,4" />
+  <circle cx="366" cy="174" r="6" fill="#facc15" stroke="#ca8a04" stroke-width="1.5">
+    <animate attributeName="cx" values="366;438" dur="1.5s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.2;0.8;1" dur="1.5s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- ================= 右側：PowerShell エンジン ＆ VBA ピッカー解析結果 (ダークコンソール) ================= -->
+  <rect x="442" y="18" width="356" height="304" rx="8" fill="#090d16" stroke="#475569" stroke-width="1.5" filter="url(#dropShadow)" />
+  <!-- コンソール タイトルバー -->
+  <path d="M 442 26 A 8 8 0 0 1 450 18 L 790 18 A 8 8 0 0 1 798 26 L 798 48 L 442 48 Z" fill="#1e293b" />
+  <rect x="454" y="27" width="12" height="12" rx="2" fill="#38bdf8" />
+  <text x="474" y="37" fill="#f8fafc" font-family="sans-serif" font-size="12" font-weight="bold">Ps_Engine_Core v303 + Excel VBA Picker</text>
+
+  <!-- Step 1: 座標逆引き (シアンブルー・アクセント) -->
+  <g opacity="0.25">
+    <rect x="458" y="58" width="324" height="74" rx="6" fill="#162032" stroke="#0284c7" stroke-width="1.5" />
+    <rect x="458" y="58" width="5" height="74" rx="2" fill="#38bdf8" />
+    <text x="472" y="78" fill="#38bdf8" font-family="Consolas, 'Meiryo UI', monospace" font-size="11.5" font-weight="bold">[Step 1] PointReverse (OS座標 → DOM逆引き)</text>
+    <text x="472" y="98" fill="#cbd5e1" font-family="sans-serif" font-size="11.5">Client(951,400) ÷ DPR(1.25) + ScrollY</text>
+    <text x="472" y="118" fill="#fde047" font-family="Consolas, 'Meiryo UI', monospace" font-size="11.5" font-weight="bold">Hit Target : SELECT (#shadow-select)</text>    <animate attributeName="opacity" values="0.25;0.25;1;1;0.25" keyTimes="0;0.32;0.38;0.9;1" dur="6s" repeatCount="indefinite" />
+  </g>
+
+  <!-- Step 2: コマンド自動生成 (インディゴパープル・アクセント) -->
+  <g opacity="0.25">
+    <rect x="458" y="142" width="324" height="84" rx="6" fill="#1a1836" stroke="#6366f1" stroke-width="1.5" />
+    <rect x="458" y="142" width="5" height="84" rx="2" fill="#818cf8" />
+    <text x="472" y="162" fill="#a5b4fc" font-family="Consolas, 'Meiryo UI', monospace" font-size="11.5" font-weight="bold">[Step 2] getRootNode() + DOMUtils セレクタ生成</text>
+    <text x="472" y="182" fill="#38bdf8" font-family="monospace" font-size="11.5">Selector : "#shadow-select"</text>
+    <text x="472" y="200" fill="#f472b6" font-family="monospace" font-size="11.5">Command  : Invoke-WebClick</text>
+    <text x="472" y="217" fill="#e2e8f0" font-family="monospace" font-size="11">BBox     : {"x":387, "y":1385, "w":747, "h":39}</text>
+    <animate attributeName="opacity" values="0.25;0.25;1;1;0.25" keyTimes="0;0.45;0.52;0.9;1" dur="6s" repeatCount="indefinite" />
+  </g>
+
+  <!-- Step 3: 安定性テスト (エメラルドグリーン・アクセント) -->
+  <g opacity="0.25">
+    <rect x="458" y="236" width="324" height="72" rx="6" fill="#062e1e" stroke="#10b981" stroke-width="1.8" />
+    <rect x="458" y="236" width="5" height="72" rx="2" fill="#34d399" />
+    <text x="472" y="256" fill="#4ade80" font-family="Consolas, 'Meiryo UI', monospace" font-size="12" font-weight="bold">✔ [Step 3] Test-SelectorStability (3/3 OK)</text>
+    <text x="472" y="276" fill="#e2e8f0" font-family="sans-serif" font-size="11.5">deepQuerySelector 貫通検証完了 (Flaky防止)</text>
+    <text x="472" y="295" fill="#fde047" font-family="sans-serif" font-size="12" font-weight="bold">Result : Excel シートへ RPAコードを自動転記</text>
+    <animate attributeName="opacity" values="0.25;0.25;1;1;0.25" keyTimes="0;0.58;0.65;0.9;1" dur="6s" repeatCount="indefinite" />
+  </g>
+</svg>
